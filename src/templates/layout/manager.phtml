@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renan Liberato - {% yield title %}</title>
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <!--<link rel="stylesheet" href="https://newcss.net/theme/night.css">-->
+    <style>
+        .flex {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/themes/prism.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.21.0/prism.min.js"></script>
+    <style>
+        .editor {
+            border-radius: 6px;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            font-family: 'Source Code Pro', monospace;
+            font-size: 14px;
+            font-weight: 400;
+            height: 340px;
+            letter-spacing: normal;
+            line-height: 20px;
+            padding: 10px;
+            tab-size: 4;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Renan Liberato - Gerenciamento</h1>
+        <nav>
+            <div class="flex" style="flex-direction: row; align-items: center; justify-content: space-between;">
+                <div>
+                    <a href="/manager/templates">Templates</a>&nbsp;/&nbsp;
+                    <a href="/manager/layouts">Layouts</a>&nbsp;/&nbsp;
+                    <a href="/manager/contents">Conteúdos</a>
+                </div>
+                <form method="POST" action="/manager/build">
+                    <button>Build</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <h1>{% yield title %}</h1>
+    <br/>
+    {% yield content %}
+</body>
+</html>

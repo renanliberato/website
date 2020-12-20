@@ -1,0 +1,15 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Editar conteúdo{% endblock %}
+
+{% block content %}
+
+<a href=/manager/contents>Voltar</a>
+<form method=post class=flex>
+    <label for=name>Name</label>
+    <input name=name value={{$content['name']}} disabled />
+    <label for=fields>Fields</label>
+    <textarea style='min-height: 300px;' name=fields>{{json_encode($content['fields'], JSON_PRETTY_PRINT)}}</textarea>
+    <button>Enviar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Novo conteúdo{% endblock %}
+
+{% block content %}
+
+<a href=/manager/contents>Voltar</a>
+<form method=post class=flex>
+    <label for=name>Name</label>
+    <input name=name />
+    <label for=fields>Fields</label>
+    <textarea style='min-height: 300px;' name=fields>[]</textarea>
+    <button>Enviar</button>
+</form>
+{% endblock %}

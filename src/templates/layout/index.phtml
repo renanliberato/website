@@ -1,0 +1,149 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta property="og:url" content="https://renanliberato.com.br{{ $GLOBALS['static']['url_prefix'] }}{% yield uri %}" />
+     <meta property="og:type" content="website" />
+     <meta property="og:title" content="{% yield title %}" />
+     <meta property="og:description" content="{% yield description %}" />
+     <title>{{ $GLOBALS['static']['title'] }} - {% yield title %}</title>
+     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+     <style>
+         .flex {
+             display: flex;
+             flex-direction: column;
+         }
+
+         a {
+             padding: 5px 10px;
+             border: 1px solid black;
+             border-radius: 2px;
+             text-decoration: none;
+             color: inherit;
+             display: inline-block;
+             margin: 5px;
+         }
+         
+         a:hover {
+             color: inherit;
+         }
+
+         section {
+             box-shadow: 0 4px 8px 0 rgba(128, 128, 128, 1);
+             transition: 0.3s;
+             padding: 15px;
+             background-color: white;
+             border-radius: 5px;
+         }
+
+         section>h1,
+         h2,
+         h3,
+         h4,
+         h5 {
+             padding-top: 0;
+         }
+
+         img.center {
+             display: block;
+             margin-left: auto;
+             margin-right: auto;
+         }
+
+         body {
+             min-height: 100%;
+             background: url('/images/dusan-adamovic-zF51dzlsL7M-unsplash.jpg')
+         }
+
+         section.item {
+             width: calc(25vw);
+             margin: 10px;
+             display: flex;
+             flex-direction: column;
+         }
+
+         @media only screen and (max-width: 1000px) {
+
+             /* For mobile phones: */
+             section.item {
+                 width: calc(40vw);
+             }
+         }
+
+         @media only screen and (max-width: 768px) {
+
+             /* For mobile phones: */
+             section.item {
+                 width: 100%;
+             }
+         }
+
+         header {
+             background: transparent;
+         }
+
+         header * {
+             color: white;
+         }
+
+         header a {
+             border: 1px solid white;
+         }
+     </style>
+ </head>
+
+ <body>
+     <header>
+         <h1>{{ $GLOBALS['static']['title'] }}</h1>
+         <nav>
+             <a href="{{ $GLOBALS['static']['url_prefix'] }}">{{ $GLOBALS['static']['posts'] }}</a>
+             <a href="{{ $GLOBALS['static']['url_prefix'] }}projects">{{ $GLOBALS['static']['projects'] }}</a>
+         </nav>
+     </header>
+     {% yield content %}
+     <!-- Global site tag (gtag.js) - Google Analytics -->
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CN01CLG8B"></script>
+     <script>
+         window.dataLayer = window.dataLayer || [];
+
+         function gtag() {
+             dataLayer.push(arguments);
+         }
+         gtag('js', new Date());
+
+         gtag('config', 'G-5CN01CLG8B');
+     </script>
+     <script>
+         window.twttr = (function(d, s, id) {
+             var js, fjs = d.getElementsByTagName(s)[0],
+                 t = window.twttr || {};
+             if (d.getElementById(id)) return t;
+             js = d.createElement(s);
+             js.id = id;
+             js.src = "https://platform.twitter.com/widgets.js";
+             fjs.parentNode.insertBefore(js, fjs);
+
+             t._e = [];
+             t.ready = function(f) {
+                 t._e.push(f);
+             };
+
+             return t;
+         }(document, "script", "twitter-wjs"));
+     </script>
+     <script>
+         (function(d, s, id) {
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) return;
+             js = d.createElement(s);
+             js.id = id;
+             js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+             fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+     </script>
+ </body>
+
+ </html>

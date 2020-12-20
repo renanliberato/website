@@ -1,0 +1,16 @@
+{% extends ./src/templates/layout/index.phtml %}
+
+{% block title %}Projetos - {{$item['title']}}{% endblock %}
+
+{% block content %}
+    <a href='/'>Voltar</a>
+    <br />
+    <br />
+    {{ $item['description'] }}
+    <br />
+    <br />
+    {% foreach ($item['links'] as $link): %}
+        <a href={{$link['url']}}>{{$link['text']}}</a>
+    {% endforeach %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends ./src/templates/layout/index.phtml %}
+
+{% block title %}Projetos{% endblock %}
+{% block description %}Diversos projetos open source usando PHP, Javascript, C# e mais{% endblock %}
+{% block uri %}projects{% endblock %}
+
+{% block content %}
+    <style>
+        body {
+            max-width: 100%;         
+        }
+        header nav {
+            margin: 0 auto;
+            max-width: 750px;
+        }
+        header h1 {
+            margin: 0 auto;
+            max-width: 750px;
+        }
+    </style>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% foreach ($projects as $project): %}
+            <section class="item">
+                <img class="center" src="/images/{{$project['image']}}" />
+                <h3 style="margin-bottom: 20px;">{{ $project['title'] }}</h3>
+                <p>{{ $project['description'] }}</p>
+                <div style="flex: 1"></div>
+                {% foreach ($project['links'] as $link): %}
+                    <a href={{$link['url']}}>{{ $GLOBALS['static'][$link['text']] }}</a>
+                {% endforeach %}
+            </section>
+        {% endforeach %}
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Conteúdos{% endblock %}
+
+{% block content %}
+
+<a href=/manager/contents/new>Novo</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Itens</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% foreach ($contents as $content): %}
+            <tr>
+                <td><a href=/manager/contents/edit?name={{$content['name']}}>{{ $content['name'] }}</a></td>
+                <td><a href=/manager/contents/items?name={{$content['name']}}>{{ count($content['items']) }}</a></td>
+                <td>
+                    <form action=/manager/contents/delete?name={{$content['name']}} method=post><button>Remover</button></form>
+                </td>
+            </tr>
+        {% endforeach; %}
+    </tbody>
+</table>
+{% endblock %}

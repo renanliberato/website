@@ -1,0 +1,30 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Templates{% endblock %}
+
+{% block content %}
+
+<a href=/manager/templates/new>Novo</a>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Length</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% foreach ($templates as $template): %}
+            <tr>
+                <td><a href=/manager/templates/edit?name={{$template['name']}}&path={{$template['path']}}>{{ $template['name'] }}</a></td>
+                <td>{{ $template['length'] }}</td>
+                <td>
+                    {% if (strpos($template['name'], '_item') === false): %}
+                        <form action=/manager/templates/delete?path={{$template['path']}}&name=$template['name'] method=post><button>Delete</button></form>
+                    {% endif; %}
+                </td>
+            </tr>
+        {% endforeach; %}
+    </tbody>
+</table>
+{% endblock %}

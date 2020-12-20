@@ -1,0 +1,178 @@
+{
+    "posts": {
+        "name": "posts",
+        "fields": [
+            {
+                "name": "title",
+                "type": "text"
+            },
+            {
+                "name": "description",
+                "type": "html"
+            },
+            {
+                "name": "image",
+                "type": "text"
+            },
+            {
+                "name": "slug",
+                "type": "text"
+            }
+        ],
+        "items": {
+            "2": {
+                "title": "2020-07-18 - Using PHP functions with namespaces",
+                "description": ".\/data\/posts\/description\/c7f019705e6530e8a69ca74277bec4a3.html",
+                "image": "claudio-schwarz-purzlbaum-q8kR_ie6WnI-unsplash.jpg",
+                "slug": "using-php-functions-with-namespaces"
+            },
+            "3": {
+                "title": "2020-07-18 - Internationalizing a React Native app",
+                "description": ".\/data\/posts\/description\/c55adced6eec57508aee7cb9735e2ae9.html",
+                "slug": "internationalizing-a-react-native-app",
+                "image": "nareeta-martin-iPp_KIsFBnI-unsplash.jpg"
+            },
+            "4": {
+                "title": "2019-08-06 - Moving irregular ranges of commits between branches",
+                "description": ".\/data\/posts\/description\/cc46430aed3dae3863e7e87778f851c9.html",
+                "slug": "moving-irregular-ranges-of-commits-between-branches",
+                "image": "donnie-rosie-taO2fC7sxDU-unsplash.jpg"
+            }
+        }
+    },
+    "projects": {
+        "name": "projects",
+        "fields": [
+            {
+                "name": "title",
+                "type": "text"
+            },
+            {
+                "name": "description",
+                "type": "text"
+            },
+            {
+                "name": "links",
+                "type": "json"
+            },
+            {
+                "name": "slug",
+                "type": "text"
+            },
+            {
+                "name": "image",
+                "type": "text"
+            }
+        ],
+        "items": [
+            {
+                "title": "FastReader",
+                "description": "A web application that facilitates the reading of texts using the ",
+                "links": [
+                    {
+                        "text": "check_the_app",
+                        "url": "\/fastreader"
+                    },
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/fastreader"
+                    }
+                ],
+                "image": "fastreader.png",
+                "slug": "fast-reader"
+            },
+            {
+                "title": "NetMiddlewares",
+                "description": "An organization on Github with the aim of making .NET Core packages available with middleware that is useful in the development of an application.",
+                "links": [
+                    {
+                        "text": "check_the_site",
+                        "url": "https:\/\/netmiddlewares.github.io\/"
+                    }
+                ],
+                "image": "netmiddlewares.png",
+                "slug": "net-middlewares"
+            },
+            {
+                "title": "spaceshooter",
+                "description": "An arcade game in the spaceshooter style. It features singleplayer and multiplayer modes and supports desktops and mobile devices.",
+                "links": [
+                    {
+                        "text": "play",
+                        "url": "https:\/\/spacearena.renanliberato.com.br"
+                    },
+                    {
+                        "text": "check_the_app",
+                        "url": "https:\/\/play.google.com\/store\/apps\/details?id=br.com.renanliberato.spaceshooter"
+                    },
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/spaceshooter"
+                    }
+                ],
+                "image": "spacearena.png",
+                "slug": "spaceshooter"
+            },
+            {
+                "title": "react-simple-stack-navigation",
+                "description": "Browsing library in ReactJS applications with few features and easy to use.",
+                "links": [
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/react-simple-stack-navigation"
+                    }
+                ],
+                "image": "react-simple-stack-navigation.png",
+                "slug": "react-simple-stack-navigation"
+            },
+            {
+                "title": "exposer",
+                "description": "PHP library for rendering HTML pages from the function call.",
+                "links": [
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/exposer"
+                    }
+                ],
+                "image": "exposer.png",
+                "slug": "exposer"
+            },
+            {
+                "title": "exposer-store",
+                "description": "PHP library for persistence and application state management using an API similar to redux.",
+                "links": [
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/exposer-store"
+                    }
+                ],
+                "image": "exposer-store.png",
+                "slug": "exposer-store"
+            },
+            {
+                "title": "react-like-php",
+                "description": "An entire list application exemplifying the use of the exposer and exposer-store libraries",
+                "links": [
+                    {
+                        "text": "check_the_repo",
+                        "url": "https:\/\/github.com\/renanliberato\/react-like-php"
+                    }
+                ],
+                "image": "react-like-php.png",
+                "slug": "react-like-php"
+            },
+            {
+                "title": "Save the astronauts",
+                "description": "Save as many astronauts as you can in 15 seconds. Quick!",
+                "links": [
+                    {
+                        "text": "check_the_app",
+                        "url": "\/save-the-astronauts"
+                    }
+                ],
+                "image": "save-the-astronauts.png",
+                "slug": "save-the-astronauts"
+            }
+        ]
+    }
+}

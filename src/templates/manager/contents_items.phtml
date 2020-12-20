@@ -1,0 +1,41 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - {{ $content['name'] }} - items{% endblock %}
+
+{% block content %}
+
+<a href=/manager/contents>Voltar</a>
+<a href=/manager/contents/items/new?name={{ $content['name'] }}>Novo</a>
+<table>
+    <thead>
+        <tr>
+            {% foreach ($content['fields'] as $field): %}
+                <th>{{ $field['name'] }}</th>
+            {% endforeach; %}
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% foreach ($content['items'] as $itemKey => $item): %}
+            <tr>
+                {% foreach ($content['fields'] as $field): %}
+                    {% if ($field['type'] == 'json'): %}
+                        <td><a href=/manager/contents/items/edit?name={{ $content['name'] }}&key={{ $itemKey }}>{{ count(array_values($item[$field['name']]))}} itens</a></td>
+                    {% else: %}
+                        <td>
+                            <a href=/manager/contents/items/edit?name={{ $content['name'] }}&key={{ $itemKey }}>
+                                {{ substr($item[$field['name']], 0, 50)}}{% if (strlen($item[$field['name']]) > 50): %}...{% endif; %}
+                            </a>
+                        </td>
+                    {% endif; %}
+                    
+                {% endforeach %}
+                <td>
+                    <form action=/manager/contents/items/delete?name={{ $content['name'] }}&key={{ $itemKey }} method=post><button>Remover</button></form>
+                </td>
+            </tr>
+        {% endforeach; %}
+    </tbody>
+    
+</table>
+{% endblock %}

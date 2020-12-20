@@ -1,0 +1,164 @@
+<!-- wp:paragraph -->
+<p>Hello!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>On today's post, we're going to talk about how to internationalize an application without external dependencies.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When I started <a href="https://play.google.com/store/apps/details?id=br.com.renanliberato.smallachievements">Small Achievements</a>, I wanted to ship the project first on two countries: Brazil and the United States. To accomplish this I needed to support both languages: Portuguese and English.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>When searching for libraries to internationalize an app, I didn't like any of the choices, to be honest. The constraints they had weren't what I was looking for.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I wanted to save my translations on the server and load them on my app, based on the user's device system locale. Sleeping on it, I concluded my objective was simple enough to avoid depending on an external library and I could implement it. So, I decided to write my own.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The feature implementation is divided into two main components: the server implementation and the client implementation.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>At the server, I store translations as JSON files separed by locales and I expose an HTTP endpoint to return the requested translation file. It's <strong>almost</strong> as simple as this:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>project_root<ul><li>data<ul><li>translations<ul><li>en_US.json</li><li>pt_BR.json</li></ul></li></ul></li><li>public<ul><li>get-translation.php</li></ul></li></ul></li></ul>
+<!-- /wp:list -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// en_US.json
+{
+  "login_screen": {
+    "title": "Hello!"
+    ...
+  }
+  ...
+}
+
+// pt_BR.json
+{
+  "login_screen": {
+    "title": "Olá!"
+    ...
+  }
+  ...
+}
+
+// get-translations.php
+&lt;?php
+
+return file_get_contents("../data/translations/{$localeFromQueryString}.json");</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>At the client, I needed to accomplish some steps:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Retrieve the user's device locale.</li><li>Query the server the translation file.</li><li>Cache this translation and reuse during app usage.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>To retrieve the user's locale, I used a simple code snippet that uses React Native classes:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// en_US
+const locale =
+    Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale
+      : NativeModules.I18nManager.localeIdentifier;</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p> To query the server and cache it, I developed a React Hook that queries the server and cache the translation on memory.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// src/hooks/useRemoteLayout.tsx
+
+// const locale = ...;
+
+// Part 1: Translation interface
+export interface Translation {
+  login_screen: {
+    title: string
+  }
+}
+
+// Part 2: Initial translation
+var globalTranslation: Translation = {
+  "login_screen": {
+    "title": ""
+  }
+}
+
+// Part 3: Translation retrieval
+function getTranslation(): Promise&lt;Translation> {
+  if (translation.login_screen.title != "") {
+    return Promise.resolve(translation);
+  }
+
+  return fetch(`https://server.com/get-translations.php?locale=${locale}`)
+    .then(res => res.json())
+    .then(json => {
+      globalTranslation = json;
+      return json;
+    });
+}
+
+// Part 4: Translation Hook
+export default function useRemoteTranslation(): Translation {
+  const &#91;translationState, setTranslationState] = React.useState&lt;Translation|undefined>(globalTranslation);
+  React.useEffect(() => {
+    getTranslation()
+      .then(translation => {
+        setTranslationState(translation);
+      });
+  }, &#91;]);
+
+  return translationState;
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>As we can see, the client implementation was divided in 4 parts:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Defining an interface, so the code editor would help us to autocomplete while using the translations.</li><li>Defining an initial translation value. As I used an deep object, I wanted to avoid 'undefined is not an object' errors when accessing deep children accross the translation.</li><li>Querying the server if the translation was not loaded yet: Here I did a quick hack to check if the translation was already retrieved, but it worked =P</li><li>The translation hook itself: We combine an <code>useState</code> and a <code>useEffect</code> to initialize the hook with the global translation and query the server for new values, if still necessary.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>The hook usage is something as follows:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:code -->
+<pre class="wp-block-code"><code>// src/components/LoginScreen.js
+import React from 'react';
+import { Text } from 'react-native';
+import useRemoteTranslation from '../hooks/useRemoteTranslation';
+
+export default function LoginScreen() {
+  const translation = useRemoteTranslation();
+
+  return &lt;Text>{translation.login_screen.title}&lt;/Text>;
+}</code></pre>
+<!-- /wp:code -->
+
+<!-- wp:paragraph -->
+<p>And that's it with it!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Some improvements were already made after this initial implementation, but what was shown here is a good initial step for your next project!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I hope it helps, and feel free to ping me on Twitter or any other social network to discuss about the post!</p>
+<!-- /wp:paragraph -->

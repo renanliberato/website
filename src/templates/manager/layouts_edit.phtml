@@ -1,0 +1,25 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Editar layout{% endblock %}
+
+{% block content %}
+
+<a href=/manager/layouts>Voltar</a>
+<form method=post class=flex>
+    <label for=name>Nome</label>
+    <input name=name value={{$layout['name']}} disabled />
+    <label for=content>Conteúdo</label>
+    <div class="editor language-html" id="content-editor"></div>
+    <input id="content-input" type="hidden" name="content" value="{{{$layout['content']}}}" />
+    <button>Enviar</button>
+</form>
+<script type="module">
+    import {CodeJar} from '/js/codejar.js';
+    let jar = CodeJar(document.querySelector('#content-editor'), Prism.highlightElement, {tab: '    '})
+    let contentInput = document.querySelector('#content-input');
+    jar.updateCode(contentInput.value);
+    jar.onUpdate(code => {
+        contentInput.value = code;
+    });
+</script>
+{% endblock %}

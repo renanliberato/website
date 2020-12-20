@@ -1,0 +1,102 @@
+<!-- wp:paragraph -->
+<p>When working with any tool, it is expected that we have a learning curve and, even after it, we take some bad decisions.<br>
+The difference is that the more we work with it, the more we will learn to resolve problems and keep the engine working.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Once, I had a challenge in the version control of a project.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>My team and I were working on a feature branch and, before merging it to master, we needed to work on another feature. Both of them required quite a bit amount of work (and commits), and guess what we did? Both of the workloads on the same branch.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>"Don't worry, we will merge both of them in the end of the Sprint".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Narrator: "They wouldn't merge it all just at the end of the Sprint".</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>What happened was: we would not be able to finish the second feature at the end of the week and the first workload should be on the master as soon as possible.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://media0.giphy.com/media/Z1BTGhofioRxK/giphy.gif" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Here is the scenario that we faced:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:image {"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://user-images.githubusercontent.com/15313802/62713400-0e42af00-b9d3-11e9-8226-824cd0915b6a.png" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>I had done several trials to get it done.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First try:<br>
+Cherry-pick, cherry-pick it all</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>The first thing I remembered was: when I need a specific change from a branch to another, I use cherry pick. Alright.<br>
+Usually in a real world scenario we do not have the happy path. In my case, some conditions did not help it to work well:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>We had dozens of developers committing to the master (and some others on the feature branch).</li><li>I needed to get not only 1-2 commits from the branch, but like 15 of them. Some on sequence, and some intercalated with the other workload.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>So, when I tried to cherry pick each of the commits, I got A LOT of conflicts even from modules that did not had any contact with the commit files. I decided to abort it to preserve the integrity of the master.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Here in the limbo is a huge mess of trials and errors that I did not documented and my sanity barrier do not even allow me to remember.<br>
+What I could record was some lessons:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>cherry pick is great for getting bugfixes from branches.</li><li>cherry pick is not the best tool to get a range of commits from another branch. Git has specialized tools (merge and rebase) for that.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Nineth try:<br>
+Using a "support branch" to help merge it.<br>
+ One of the parameters of git branch is the commit that will originate it.<br>
+As most of the feature workload was on a range of commits, I did the following steps:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><li>Created a branch on the last commit of the initial range.</li><li>Cherry picked the other commits that were separated.</li><li>Merged the master to the support one (you know, just to resolve conflicts on a safer place). Here I had conflicts, but those due to the time the branch was not updated, expected.</li><li>merged the support branch to master.</li></ul>
+<!-- /wp:list -->
+
+<!-- wp:image {"sizeSlug":"large"} -->
+<figure class="wp-block-image size-large"><img src="https://user-images.githubusercontent.com/15313802/62713458-274b6000-b9d3-11e9-9a16-5a98770442db.png" alt=""/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph -->
+<p>Hell yeah, it worked.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>As an extra step, before pushing, I merged the master to the feature branch. And NO CONFLICTS WITH THE FEATURE WERE FOUND. Just some conflicts with the commits not included on the bundle. Again, EXPECTED.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>I then pushed master to the remote server, gave a high five to my coworker and relaxed for some minutes. I deserved.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>We made some mistakes, like using a branch for multiple and huge workloads, having an outdated branch for much time, etc.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>But you know, we fixed it, in a reasonable time. That was more important. My PO was happy and I learned lots of new things.</p>
+<!-- /wp:paragraph -->

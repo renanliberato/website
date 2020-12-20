@@ -1,0 +1,18 @@
+{% extends ./src/templates/layout/index.phtml %}
+
+{% block title %}{{ $item['title'] }}{% endblock %}
+{% block description %}Acesse e confira{% endblock %}
+{% block uri %}posts/{{$item['slug']}}{% endblock %}
+
+{% block content %}
+<section>
+    <img src="/images/{{$item['image']}}" />
+    <h1>{{$item['title']}}</h1>
+    <div style="display: flex; flex-direction: row;">
+        <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">Tweet</a>
+        <div style="margin-left: 20px;" class="fb-share-button" data-size="large" data-href="https://renanliberato.com.br/posts/{{$item['slug']}}" data-layout="button">
+        </div>
+    </div>
+    <p>{{ $item['description'] }}</p>
+</section>
+{% endblock %}

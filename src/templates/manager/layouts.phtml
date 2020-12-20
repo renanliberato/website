@@ -1,0 +1,28 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Layouts{% endblock %}
+
+{% block content %}
+
+<a href=/manager/layouts/new>Novo</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tamanho</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% foreach ($layouts as $layout): %}
+            <tr>
+                <td><a href=/manager/layouts/edit?name={{$layout['name']}}&path={{$layout['path']}}>{{ $layout['name'] }}</a></td>
+                <td>{{ $layout['length'] }}</td>
+                <td>
+                    <form action=/manager/layouts/delete?path={{$layout['path']}} method=post><button>Delete</button></form>
+                </td>
+            </tr>
+        {% endforeach; %}
+    </tbody>
+</table>
+{% endblock %}

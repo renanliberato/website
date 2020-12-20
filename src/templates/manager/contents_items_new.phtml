@@ -1,0 +1,38 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Novo conteúdo de {{ $content['name'] }} {% endblock %}
+
+{% block content %}
+
+<a href=/manager/contents/items?name={{ $content['name'] }}>Voltar</a>
+<form method=post class=flex>
+    {% foreach($content['fields'] as $field): %}
+        
+        {% if ($field['type'] == 'html'): %}
+            <label class="label-for-editor" for={{$field['name']}}>{{$field['name']}}</label>
+            <div class="editor language-html" id="{{ $field['name'] }}-editor"></div>
+            <input id="{{ $field['name'] }}-input" type="hidden" name="{{ $field['name'] }}" />
+        {% elseif ($field['type'] == 'json'): %}
+            <label class="label-for-editor" for={{$field['name']}}>{{$field['name']}}</label>
+            <div class="editor language-js" id="{{ $field['name'] }}-editor"></div>
+            <input id="{{ $field['name'] }}-input" type="hidden" name="{{ $field['name'] }}" />
+        {% else: %}
+            <label for={{$field['name']}}>{{$field['name']}}</label>
+            <input name={{$field['name']}} />
+        {% endif; %}
+
+    {% endforeach; %}
+    <button>Enviar</button>
+</form>
+<script type="module">
+    import {CodeJar} from '/js/codejar.js';
+    Array.from(document.getElementsByClassName('label-for-editor')).forEach(el => {
+        const name = el.getAttribute('for');
+        let jar = CodeJar(document.getElementById(name+'-editor'), Prism.highlightElement, {tab: '    '})
+        let contentInput = document.getElementById(name+'-input');
+        jar.onUpdate(code => {
+            contentInput.value = code;
+        });
+    });
+</script>
+{% endblock %}

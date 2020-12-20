@@ -1,0 +1,45 @@
+{% extends ./src/templates/layout/manager.phtml %}
+
+{% block title %}Manager - Novo conteúdo de {{ $content['name'] }} {% endblock %}
+
+{% block content %}
+<a href=/manager/contents/items?name={{ $content['name'] }}>Voltar</a>
+<br/>
+<br/>
+<div class="flex" style="flex-direction: row; align-items: flex-start;">
+    <form method=post class=flex style="flex: 1; margin-left: 20px; margin-right: 20px;">
+        {% foreach($content['fields'] as $field): %}
+            {% if ($field['type'] == 'html'): %}
+                <label class="label-for-editor" for={{$field['name']}}>{{$field['name']}}</label>
+                <div class="editor language-html" id="{{ $field['name'] }}-editor"></div>
+                <input id="{{ $field['name'] }}-input" type="hidden" name="{{ $field['name'] }}" value="{{{$item[$field['name']]}}}" />
+            {% elseif ($field['type'] == 'json'): %}
+                <label class="label-for-editor" for={{$field['name']}}>{{$field['name']}}</label>
+                <div class="editor language-js" id="{{ $field['name'] }}-editor"></div>
+                <input id="{{ $field['name'] }}-input" type="hidden" name="{{ $field['name'] }}" value="{{{json_encode($item[$field['name']], JSON_PRETTY_PRINT)}}}" />
+            {% else: %}
+                <label for={{$field['name']}}>{{$field['name']}}</label>
+                {% if ($field["name"] == "slug"): %}
+                    <input name={{$field['name']}} disabled value="{{$item[$field['name']]}}" />
+                {% else: %}
+                    <input name={{$field['name']}} value="{{$item[$field['name']]}}" />
+                {% endif %}
+            {% endif; %}
+
+        {% endforeach; %}
+        <button style="margin-top: 20px;">Enviar</button>
+    </form>
+</div>
+<script type="module">
+    import {CodeJar} from '/js/codejar.js';
+    Array.from(document.getElementsByClassName('label-for-editor')).forEach(el => {
+        const name = el.getAttribute('for');
+        let jar = CodeJar(document.getElementById(name+'-editor'), Prism.highlightElement, {tab: '    '})
+        let contentInput = document.getElementById(name+'-input');
+        jar.updateCode(contentInput.value);
+        jar.onUpdate(code => {
+            contentInput.value = code;
+        });
+    });
+</script>
+{% endblock %}

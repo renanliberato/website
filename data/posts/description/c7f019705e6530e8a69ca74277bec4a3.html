@@ -1,0 +1,122 @@
+<!-- wp:paragraph -->
+<p>Hi! Today, we're gonna check how to use functions under namespaces in our PHP project.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>First, a quick introduction on namespaces:</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Namespaces allow us to determine how visible a function will be to the rest of our application. So, files need to "import" that namespace to use classes and functions under them.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Usually when we work with modern frameworks like Laravel and Symfony, we mainly use classes. Usually the framework scaffolds an "App" namespace and we just need to follow PSR-4 naming pattern. For example:</p>
+<!-- /wp:paragraph -->
+
+<pre><code>
+{
+    ...
+    "autoload": {
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ],
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    ...
+}
+</code></pre>
+
+<!-- wp:paragraph -->
+<p> However, functions are not included in PSR-4, so we need to deal with them quite differently.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To proceed with the post, let's divide using functions in three steps: <strong>declaring</strong> the function, <strong>autoloading</strong> the function and <strong>using</strong> the function.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To declare the functions we follow the same pattern used in classes, except that the file name can be different than the class name. For example:</p>
+<!-- /wp:paragraph -->
+
+<pre><code>
+// auth.php
+namespace App\Auth;
+
+function login($username, $password) {
+    ...
+}
+</code></pre>
+
+<!-- wp:paragraph -->
+<p>If we try to use this function in another file we will run into a runtime error, even thought our code editor will identify it correctly. Notice that to import functions we need to use <code>use function</code> command.</p>
+<!-- /wp:paragraph -->
+
+<pre><code>
+// http.php
+namespace App\Http;
+
+use function App\Auth\login;
+
+function loginRoute($request) {
+    login($request['username'], $request['password']);
+}
+</code></pre>
+
+<!-- wp:paragraph -->
+<p>For our luck, composer can autoload functions! We need to open a new "files" key inside "autoload" and declare each file that contains functions under namespaces. For example:</p>
+<!-- /wp:paragraph -->
+
+<pre><code>
+{
+    ...
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "AppTests\\": "tests/"
+        },
+        "files": [
+            "src/Utils/functions.php",
+            "src/Http/functions.php",
+            "src/Auth/functions.php",
+            "src/Db/functions.php",
+            "src/Projects/functions.php",
+            "src/Projects/Milestones/functions.php",
+            "src/Projects/Milestones/Items/functions.php",
+            "src/Firebase/functions.php"
+        ]
+    },
+    ...
+}
+</code></pre>
+
+<!-- wp:paragraph -->
+<p>Remember that we need to execute <code>composer dump-autoload</code> after editing composer.json!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Then if you execute your project again, your function will be imported and executed correctly.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Oh, even thought I put our functions.php file under src, we can use subnamespacess too, like <code>App\Projects</code>!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Now that we know how to use functions, here comes the conclusion (AKA my opinion):</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Even thought frameworks guide us mainly to use classes, I believe functions are a great option when we want to avoid unecessary complexity.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>To be clearer, every logic that does not <strong>require</strong> mutation can be a function. I've been using it widely in a current project, <a href="https://play.google.com/store/apps/details?id=br.com.renanliberato.smallachievements">Small Achievements</a>, and I'm impressed with how much unnecessary lines of code I've already saved.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Please, share with your friends and if you want to further discuss this topic, ping me on Twitter!<br></p>
+<!-- /wp:paragraph -->
